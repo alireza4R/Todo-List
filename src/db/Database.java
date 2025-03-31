@@ -78,4 +78,13 @@ public class Database {
 
         validators.put(entityCode, validator);
     }
+
+    public static Boolean check (int id)  {
+        for (Entity temp : entities){
+            if(temp.id == id){
+                return true;
+            }
+        }
+        return false;
+    }
 }
