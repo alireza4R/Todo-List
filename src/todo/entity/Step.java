@@ -7,9 +7,9 @@ import java.util.Date;
 
 public class Step extends Entity implements Trackable {
     public static final int STEP_ENTITY_CODE = 2;
-    String title;
-    String status;
-    int taskRef;
+    public String title;
+    public Status status;
+    public int taskRef;
 
     public enum Status{
         NotStarted , Completed;
