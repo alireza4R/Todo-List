@@ -12,7 +12,7 @@ public class TaskValidator implements Validator {
     @Override
     public void validate(Entity entity) throws InvalidEntityException{
         if(!(entity instanceof Step)){
-            throw new IllegalArgumentException("object must be type of Step class");
+            throw new IllegalArgumentException("object must be type of Task class");
         }
         Task temp = (Task)entity;
 
@@ -20,9 +20,6 @@ public class TaskValidator implements Validator {
             throw new InvalidEntityException("title is empty");
         }
 
-        if(!(Database.check(temp.id))){
-            throw new InvalidEntityException("Cannot find task with ID=" + temp.id);
-        }
 
     }
 }
