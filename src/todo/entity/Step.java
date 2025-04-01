@@ -11,6 +11,12 @@ public class Step extends Entity implements Trackable {
     public Status status;
     public int taskRef;
 
+    public Step (int taskRef , String title , Status status){
+        this.taskRef = taskRef;
+        this.title = title;
+        this.status = status;
+    }
+
     public enum Status{
         NotStarted , Completed;
     }

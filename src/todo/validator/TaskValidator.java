@@ -21,7 +21,7 @@ public class TaskValidator implements Validator {
         }
 
         if(!(Database.check(temp.id))){
-            throw new InvalidEntityException("id doesn't exist");
+            throw new InvalidEntityException("Cannot find task with ID=" + temp.id);
         }
 
     }
