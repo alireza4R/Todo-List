@@ -87,4 +87,14 @@ public class Database {
         }
         return false;
     }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        ArrayList<Entity> temp = new ArrayList<>();
+        for (Entity temp2 : entities){
+            if(temp2.getEntityCode() == entityCode){
+                temp.add(temp2);
+            }
+        }
+        return temp;
+    }
 }

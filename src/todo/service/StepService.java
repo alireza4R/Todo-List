@@ -4,6 +4,7 @@ import db.Database;
 import db.exception.InvalidEntityException;
 import todo.entity.Step;
 import static todo.entity.Step.Status.NotStarted;
+import java.util.Scanner;
 
 public class StepService {
     public static void saveStep(int taskRef, String title) throws InvalidEntityException, CloneNotSupportedException {
