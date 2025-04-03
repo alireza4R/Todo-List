@@ -12,6 +12,13 @@ public class Task extends Entity implements Trackable {
     public Date dueDate;
     public Status status;
 
+    public Task (String title , String description , Date dueDate , Status status){
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.status = status;
+    }
+
 
     public enum Status{
         NotStarted , InProgress , Completed;
