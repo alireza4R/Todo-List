@@ -18,8 +18,9 @@ public class StepService {
         System.out.println("Enter id of task:");
         int taskId = scn.nextInt();
 
-        System.out.println("Enter title of task:");
-        String title = scn.nextLine();
+        System.out.println("Enter title of Step:");
+        Scanner scanner = new Scanner(System.in);
+        String title = scanner.nextLine();
 
         Step temp = new Step(taskId , title , NotStarted);
 
@@ -29,12 +30,13 @@ public class StepService {
 
             flag = true;
         }
+
         catch(Exception e){
             System.out.println("Cannot save step." + "\n Error:" + e.getMessage());
         }
 
         if(flag){
-            System.out.println( "Step saved successfully." + "\n" + "ID: " + taskId + "Creation Date: " + );
+            System.out.println( "Step saved successfully." + "\n" + "ID: " + temp.id + "\n" + "Creation Date: " + temp.getCreationDate() );
         }
     }
 }

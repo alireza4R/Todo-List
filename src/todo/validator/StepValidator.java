@@ -20,8 +20,8 @@ public class StepValidator implements Validator {
             throw new InvalidEntityException("title is empty");
         }
 
-        if (!(Database.check(temp.id))) {
-            throw new InvalidEntityException("Cannot find task with ID=" + temp.id);
+        if (!(Database.check(temp.taskRef))) {
+            throw new InvalidEntityException("Cannot find task with ID=" + temp.taskRef);
         }
     }
 }
