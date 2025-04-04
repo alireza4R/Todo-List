@@ -53,6 +53,95 @@ public class TaskService {
             System.out.println( "task saved successfully." + "\n" + "ID: " + temp.id  );
         }
     }
+
+    public void updateTask (){
+        Scanner scn = new Scanner(System.in);
+
+
+
+        while(true){
+            System.out.println("Enter the id of task you want to change" + "\ntitle \ndescription\n status \n duedate \n");
+            String id = scn.nextLine();
+            int idNum = Integer.parseInt(id);
+
+            System.out.println("Enter the name of field that you want to change");
+            String entry =  scn.nextLine();
+            System.out.println("Enter new value");
+            String newValue = scn.nextLine();
+            Task temp = null;
+            String temp2 = null;
+            try {
+                temp = (Task) Database.get(idNum);
+            }
+            catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+            boolean flag = false;
+            switch (entry){
+                case "title" :
+                    try {
+                         temp2 = temp.title;
+                        temp.title = newValue;
+                        Database.update(temp);
+                    }
+                    catch (Exception e){
+                    System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                    }
+                    break;
+                case "descreption" :
+                    try {
+                         temp2 = temp.description;
+                        temp.title = newValue;
+                        Database.update(temp);
+                    }
+                    catch (Exception e){
+                        System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                    }
+                    break;
+                case "status" :
+                    try {
+                         temp2 = temp.status.toString();
+                        temp.status = Task.Status.valueOf(newValue);
+                        Database.update(temp);
+                        Database.modifyComponents(idNum);
+                    }
+                    catch (Exception e){
+                        System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                    }
+                    break;
+                case "duedate" :
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = null;
+
+                    try {
+                         temp2 = temp.dueDate.toString();
+                        date = formatter.parse(newValue);
+                        temp.dueDate = date;
+                        Database.update(temp);
+                    } catch (Exception e) {
+                        System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                    }
+                    break;
+                default:
+                    System.out.println("you entered wrong field. try again.");
+                   flag = true;
+            }
+
+            if(!flag){
+                System.out.println("Successfully updated the task.\n" +
+                        "Field: " + entry + "\n" +
+                        "Old Value: " + temp2 + "\n" +
+                        "New Value: " + newValue + "\n" +
+                        "Modification Date: " + new Date());
+                break;
+            }
+
+
+        }
+
+
+    }
 }
 
 

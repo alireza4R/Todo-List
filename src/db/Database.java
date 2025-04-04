@@ -2,10 +2,14 @@ package db;
 
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
+import todo.entity.Step;
+
 import java.util.Date;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+
+import static todo.entity.Step.Status.Completed;
 
 public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
@@ -96,5 +100,26 @@ public class Database {
             }
         }
         return temp;
+    }
+
+    public static void deleteComponents (int id){
+        for (int i = 0 ; i < entities.size() ; i++){
+            if(entities.get(i) instanceof Step){
+                if (((Step) entities.get(i)).taskRef == id){
+                    entities.remove(i);
+                }
+            }
+        }
+    }
+
+    public static void modifyComponents(int id){
+        for (int i = 0 ; i < entities.size() ; i++){
+            if(entities.get(i) instanceof Step){
+                if (((Step) entities.get(i)).taskRef == id){
+                    ((Step) entities.get(i)).status = Completed;
+                }
+            }
+        }
+
     }
 }
