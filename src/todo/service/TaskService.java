@@ -6,6 +6,7 @@ import db.exception.InvalidEntityException;
 import todo.entity.*;
 import static todo.entity.Task.Status.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Date;
 
@@ -57,14 +58,12 @@ public class TaskService {
     public void updateTask (){
         Scanner scn = new Scanner(System.in);
 
-
-
         while(true){
-            System.out.println("Enter the id of task you want to change" + "\ntitle \ndescription\n status \n duedate \n");
+            System.out.println("Enter the id of task you want to change" );
             String id = scn.nextLine();
             int idNum = Integer.parseInt(id);
 
-            System.out.println("Enter the name of field that you want to change");
+            System.out.println("Enter the name of field that you want to change" + "\ntitle \ndescription\n status \n duedate \n");
             String entry =  scn.nextLine();
             System.out.println("Enter new value");
             String newValue = scn.nextLine();
@@ -136,11 +135,42 @@ public class TaskService {
                         "Modification Date: " + new Date());
                 break;
             }
+        }
+    }
 
+    public static void getTask (){
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Enter the id of task you want to change" );
+        String taskId = scn.nextLine();
+        int idNum = Integer.parseInt(taskId);
+        Task temp = null;
+        try{
+            temp = (Task) Database.get(idNum);
+            System.out.println("ID: " + taskId + "\nTitle: " + temp.title + "\nDue Date: " + temp.dueDate + "\nStatus: " + temp.status + "Steps:\n");
+            Database.printSteps(idNum);
+        }
+        catch (Exception e){
+            System.out.println("Cannot find task with ID=7.");
+        }
+    }
 
+    public static void printAllTasks(){
+        ArrayList<Entity> temp = Database.getAll(1);
+
+        for (int i = 0 ; i<temp.size() ; i++){
+            for (int j=i+1 ; j< temp.size() ; j++)
+                if(((Task)temp.get(i)).dueDate.compareTo(((Task)temp.get(j)).dueDate) > 0){
+                    Entity temp2 = temp.get(i);
+                    temp.set(i,temp.get(j));
+                    temp.set(j,temp2);
+
+                }
         }
 
-
+        for (Entity newTask:temp){
+            System.out.println("(ID: " + ((Task)newTask).id + "\nTitle: " + ((Task)newTask).title + "\nDue date: " + ((Task) newTask).dueDate + "Status: " + ((Task) newTask).status + "\n") ;
+            Database.printSteps(newTask.id);
+        }
     }
 }
 

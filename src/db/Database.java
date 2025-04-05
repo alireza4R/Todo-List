@@ -3,6 +3,7 @@ package db;
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
 import todo.entity.Step;
+import todo.entity.Task;
 
 import java.util.Date;
 
@@ -119,6 +120,32 @@ public class Database {
                     ((Step) entities.get(i)).status = Completed;
                 }
             }
+        }
+    }
+
+    public static void checkIfCompleted (int id){
+        for (Entity temp : entities){
+            if(temp instanceof Step && ((Step) temp).taskRef == id){
+                if(((Step) temp).status != Completed)
+                    return;
+            }
+        }
+
+        Task temp = null;
+        try {
+           temp = (Task) Database.get(id);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        temp.status = Task.Status.Completed;
+    }
+
+    public static void printSteps (int id){
+        for (Entity temp : entities){
+            if(temp instanceof Step && ((Step) temp).taskRef == id)
+                System.out.println("+" + ((Step) temp).title + "\nID: " + id + "Status: " + ((Step) temp).status ) ;
         }
 
     }
