@@ -172,6 +172,17 @@ public class TaskService {
             Database.printSteps(newTask.id);
         }
     }
+
+    public static void printAllIncomplete(){
+        ArrayList<Entity> temp = Database.getAll(1);
+        for (Entity temp2 : temp){
+            if(((Task)temp2).status != Completed){
+                System.out.println("(ID: " + ((Task)temp2).id + "\nTitle: " + ((Task)temp2).title + "\nDue date: " + ((Task) temp2).dueDate + "Status: " + ((Task) temp2).status + "\n");
+                Database.printSteps(temp2.id);
+            }
+        }
+
+    }
 }
 
 
