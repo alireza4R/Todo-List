@@ -17,7 +17,7 @@ public class TaskService {
         Database.update(temp);
     }
 
-    public void addTask (){
+    public static void addTask (){
         Scanner scn = new Scanner(System.in);
 
         System.out.println("Enter title of task");
@@ -34,7 +34,8 @@ public class TaskService {
         try {
            date = formatter.parse(dueDate);
         } catch (Exception e) {
-            System.out.println("Wrong format");
+            System.out.println("Cannot save task." + "\n Error:" + "Wrong date format");
+            return;
         }
 
         Task temp = new Task(title , description , date , NotStarted);
@@ -48,6 +49,7 @@ public class TaskService {
 
         catch(Exception e){
             System.out.println("Cannot save task." + "\n Error:" + e.getMessage());
+            return;
         }
 
         if(flag){
@@ -55,7 +57,7 @@ public class TaskService {
         }
     }
 
-    public void updateTask (){
+    public static void updateTask (){
         Scanner scn = new Scanner(System.in);
 
         while(true){
@@ -74,6 +76,7 @@ public class TaskService {
             }
             catch (Exception e){
                 System.out.println(e.getMessage());
+                return;
             }
 
             boolean flag = false;
@@ -86,6 +89,7 @@ public class TaskService {
                     }
                     catch (Exception e){
                     System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                    return;
                     }
                     break;
                 case "descreption" :
@@ -96,6 +100,7 @@ public class TaskService {
                     }
                     catch (Exception e){
                         System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                        return;
                     }
                     break;
                 case "status" :
@@ -107,6 +112,7 @@ public class TaskService {
                     }
                     catch (Exception e){
                         System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                        return;
                     }
                     break;
                 case "duedate" :
@@ -120,6 +126,7 @@ public class TaskService {
                         Database.update(temp);
                     } catch (Exception e) {
                         System.out.println("Cannot update task with ID=" + idNum + "\n" + e.getMessage());
+                        return;
                     }
                     break;
                 default:
@@ -140,17 +147,18 @@ public class TaskService {
 
     public static void getTask (){
         Scanner scn = new Scanner(System.in);
-        System.out.println("Enter the id of task you want to change" );
+        System.out.println("Enter the id of task\n" );
         String taskId = scn.nextLine();
         int idNum = Integer.parseInt(taskId);
         Task temp = null;
         try{
             temp = (Task) Database.get(idNum);
-            System.out.println("ID: " + taskId + "\nTitle: " + temp.title + "\nDue Date: " + temp.dueDate + "\nStatus: " + temp.status + "Steps:\n");
+            System.out.println("ID: " + taskId + "\nTitle: " + temp.title + "\nDue Date: " + temp.dueDate + "\nStatus: " + temp.status + "\nSteps:\n");
             Database.printSteps(idNum);
         }
         catch (Exception e){
             System.out.println("Cannot find task with ID=7.");
+            return;
         }
     }
 
@@ -168,7 +176,7 @@ public class TaskService {
         }
 
         for (Entity newTask:temp){
-            System.out.println("(ID: " + ((Task)newTask).id + "\nTitle: " + ((Task)newTask).title + "\nDue date: " + ((Task) newTask).dueDate + "Status: " + ((Task) newTask).status + "\n") ;
+            System.out.println("(ID: " + ((Task)newTask).id + "\nTitle: " + ((Task)newTask).title + "\nDue date: " + ((Task) newTask).dueDate + "\nStatus: " + ((Task) newTask).status + "\n") ;
             Database.printSteps(newTask.id);
         }
     }
@@ -177,7 +185,7 @@ public class TaskService {
         ArrayList<Entity> temp = Database.getAll(1);
         for (Entity temp2 : temp){
             if(((Task)temp2).status != Completed){
-                System.out.println("(ID: " + ((Task)temp2).id + "\nTitle: " + ((Task)temp2).title + "\nDue date: " + ((Task) temp2).dueDate + "Status: " + ((Task) temp2).status + "\n");
+                System.out.println("(ID: " + ((Task)temp2).id + "\nTitle: " + ((Task)temp2).title + "\nDue date: " + ((Task) temp2).dueDate + "\nStatus: " + ((Task) temp2).status + "\n");
                 Database.printSteps(temp2.id);
             }
         }

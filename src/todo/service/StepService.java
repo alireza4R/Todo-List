@@ -22,8 +22,14 @@ public class StepService {
         Scanner scn = new Scanner(System.in);
 
         System.out.println("Enter id of task:");
-        int taskId = scn.nextInt();
-
+        int taskId;
+        try {
+           taskId = scn.nextInt();
+        }
+        catch (Exception e){
+            System.out.println("Wrong id");
+            return;
+        }
         System.out.println("Enter title of Step:");
         Scanner scanner = new Scanner(System.in);
         String title = scanner.nextLine();
@@ -37,6 +43,7 @@ public class StepService {
             flag = true;
         } catch (Exception e) {
             System.out.println("Cannot save step." + "\n Error:" + e.getMessage());
+            return;
         }
 
         if (flag) {
@@ -44,7 +51,7 @@ public class StepService {
         }
     }
 
-    public void updateSask() {
+    public static void updateStep() {
         Scanner scn = new Scanner(System.in);
 
         while (true) {
@@ -62,6 +69,7 @@ public class StepService {
                 temp = (Step) Database.get(idNum);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                return;
             }
 
             boolean flag = false;
@@ -73,6 +81,7 @@ public class StepService {
                         Database.update(temp);
                     } catch (Exception e) {
                         System.out.println("Cannot update step with ID=" + idNum + "\n" + e.getMessage());
+                        return;
                     }
                     break;
 
@@ -87,6 +96,7 @@ public class StepService {
 
                     } catch (Exception e) {
                         System.out.println("Cannot update step with ID=" + idNum + "\n" + e.getMessage());
+                        return;
                     }
                     break;
 

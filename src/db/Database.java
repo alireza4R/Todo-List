@@ -137,6 +137,7 @@ public class Database {
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+            return;
         }
 
         temp.status = Task.Status.Completed;
@@ -145,7 +146,7 @@ public class Database {
     public static void printSteps (int id){
         for (Entity temp : entities){
             if(temp instanceof Step && ((Step) temp).taskRef == id)
-                System.out.println("+" + ((Step) temp).title + "\nID: " + id + "Status: " + ((Step) temp).status ) ;
+                System.out.println("+" + ((Step) temp).title + "\nID: " + id + "\nStatus: " + ((Step) temp).status + "\n") ;
         }
 
     }

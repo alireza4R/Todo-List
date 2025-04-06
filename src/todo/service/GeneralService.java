@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class GeneralService {
 
-    public void delete(){
+    public static void delete(){
         Scanner scn = new Scanner(System.in);
 
         System.out.println("Enter id of Entity");
@@ -24,6 +24,7 @@ public class GeneralService {
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+            return;
         }
 
         try {
@@ -35,6 +36,7 @@ public class GeneralService {
 
         catch(Exception e){
             System.out.println("Cannot delete Entity with ID=" + id + ".\n Error:" + e.getMessage());
+            return;
         }
 
         if(flag){

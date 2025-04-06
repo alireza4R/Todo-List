@@ -11,7 +11,7 @@ public class TaskValidator implements Validator {
 
     @Override
     public void validate(Entity entity) throws InvalidEntityException{
-        if(!(entity instanceof Step)){
+        if(!(entity instanceof Task)){
             throw new IllegalArgumentException("object must be type of Task class");
         }
         Task temp = (Task)entity;
