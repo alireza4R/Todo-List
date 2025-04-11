@@ -1,21 +1,32 @@
-package example;
+package todo.entity;
 
 import db.Entity;
 import db.Trackable;
 
 import java.util.Date;
 
-public class  Document extends Entity implements Trackable {
+public class Task extends Entity implements Trackable {
+    public static final int TASK_ENTITY_CODE = 1;
+    public String title;
+    public String description;
+    public Date dueDate;
+    public Status status;
 
-    public String content;
+    public Task (String title , String description , Date dueDate , Status status){
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.status = status;
+    }
 
-    public Document (String content){
-        this.content = content;
+
+    public enum Status{
+        NotStarted , InProgress , Completed;
     }
 
     @Override
     public int getEntityCode() {
-        return 0;
+        return TASK_ENTITY_CODE;
     }
 
     @Override
@@ -37,4 +48,5 @@ public class  Document extends Entity implements Trackable {
     public Date getLastModificationDate() {
         return lastModificationDate;
     }
+
 }

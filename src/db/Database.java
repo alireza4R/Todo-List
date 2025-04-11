@@ -2,10 +2,15 @@ package db;
 
 import db.exception.EntityNotFoundException;
 import db.exception.InvalidEntityException;
+import todo.entity.Step;
+import todo.entity.Task;
+
 import java.util.Date;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+
+import static todo.entity.Step.Status.Completed;
 
 public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
@@ -77,5 +82,72 @@ public class Database {
         }
 
         validators.put(entityCode, validator);
+    }
+
+    public static Boolean check (int id)  {
+        for (Entity temp : entities){
+            if(temp.id == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static ArrayList<Entity> getAll(int entityCode) {
+        ArrayList<Entity> temp = new ArrayList<>();
+        for (Entity temp2 : entities){
+            if(temp2.getEntityCode() == entityCode){
+                temp.add(temp2);
+            }
+        }
+        return temp;
+    }
+
+    public static void deleteComponents (int id){
+        for (int i = 0 ; i < entities.size() ; i++){
+            if(entities.get(i) instanceof Step){
+                if (((Step) entities.get(i)).taskRef == id){
+                    entities.remove(i);
+                }
+            }
+        }
+    }
+
+    public static void modifyComponents(int id){
+        for (int i = 0 ; i < entities.size() ; i++){
+            if(entities.get(i) instanceof Step){
+                if (((Step) entities.get(i)).taskRef == id){
+                    ((Step) entities.get(i)).status = Completed;
+                }
+            }
+        }
+    }
+
+    public static void checkIfCompleted (int id){
+        for (Entity temp : entities){
+            if(temp instanceof Step && ((Step) temp).taskRef == id){
+                if(((Step) temp).status != Completed)
+                    return;
+            }
+        }
+
+        Task temp = null;
+        try {
+           temp = (Task) Database.get(id);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        temp.status = Task.Status.Completed;
+    }
+
+    public static void printSteps (int id){
+        for (Entity temp : entities){
+            if(temp instanceof Step && ((Step) temp).taskRef == id)
+                System.out.println("+" + ((Step) temp).title + "\nID: " + id + "\nStatus: " + ((Step) temp).status + "\n") ;
+        }
+
     }
 }
