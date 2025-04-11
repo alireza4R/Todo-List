@@ -1,11 +1,12 @@
 package todo.entity;
 
 import db.Entity;
+import db.Serializer;
 import db.Trackable;
 
 import java.util.Date;
 
-public class Task extends Entity implements Trackable {
+public class Task extends Entity implements Trackable  {
     public static final int TASK_ENTITY_CODE = 1;
     public String title;
     public String description;
@@ -18,6 +19,7 @@ public class Task extends Entity implements Trackable {
         this.dueDate = dueDate;
         this.status = status;
     }
+
 
 
     public enum Status{

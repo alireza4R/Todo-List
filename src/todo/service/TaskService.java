@@ -157,7 +157,7 @@ public class TaskService {
             Database.printSteps(idNum);
         }
         catch (Exception e){
-            System.out.println("Cannot find task with ID=7.");
+            System.out.println("Cannot find task with ID=" + taskId);
             return;
         }
     }

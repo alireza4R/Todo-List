@@ -1,6 +1,7 @@
 package todo.entity;
 
 import db.Entity;
+import db.Serializer;
 import db.Trackable;
 
 import java.util.Date;
