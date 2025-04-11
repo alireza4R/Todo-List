@@ -5,10 +5,15 @@ import db.exception.InvalidEntityException;
 import todo.entity.Step;
 import todo.entity.Task;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static todo.entity.Step.Status.Completed;
 
@@ -16,6 +21,7 @@ public class Database {
     private static ArrayList<Entity> entities = new ArrayList<>();
     private static int num = 1;
     private static HashMap<Integer, Validator> validators = new HashMap<>();
+    private static HashMap<Integer, Serializer> serializers = new HashMap<>();
 
     public static void add(Entity e) throws CloneNotSupportedException, InvalidEntityException {
         e.id = num;
@@ -84,6 +90,14 @@ public class Database {
         validators.put(entityCode, validator);
     }
 
+    public static void registerSerializer(int entityCode, Serializer serializer) {
+        if(serializers.containsKey(entityCode)){
+            throw new IllegalArgumentException("a serializer for this code already exist");
+        }
+
+        serializers.put(entityCode, serializer);
+    }
+
     public static Boolean check (int id)  {
         for (Entity temp : entities){
             if(temp.id == id){
@@ -146,8 +160,55 @@ public class Database {
     public static void printSteps (int id){
         for (Entity temp : entities){
             if(temp instanceof Step && ((Step) temp).taskRef == id)
-                System.out.println("+" + ((Step) temp).title + "\nID: " + id + "\nStatus: " + ((Step) temp).status + "\n") ;
+                System.out.println("+" + ((Step) temp).title + "\nID: " + temp.id + "\nStatus: " + ((Step) temp).status + "\n") ;
         }
 
+    }
+
+    public static void save() {
+        try (PrintWriter writer = new PrintWriter("db.txt")) {
+            writer.println("NEXT_ID|" + Database.getNextId());
+            for (Entity entity : entities) {
+                int code = entity.getEntityCode();
+                Serializer s = serializers.get(code);
+                String serialized = s.serialize(entity);
+                writer.println(code + "|" + serialized);
+            }
+            System.out.println("successfully Saved");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void load() {
+        try (Scanner scanner = new Scanner(new File("db.txt"))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                if (line.startsWith("NEXT_ID|")) {
+                    String[] idParts = line.split("\\|");
+                    Database.setNextId(Integer.parseInt(idParts[1]));
+                    continue;
+                }
+
+
+                String[] parts = line.split("\\|", 2);
+                int code = Integer.parseInt(parts[0]);
+                String data = parts[1];
+                Serializer s = serializers.get(code);
+                Entity entity = s.deserialize(data);
+                entities.add(entity);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found ,database is empty.\n");
+        }
+    }
+
+    public static int getNextId(){
+        return num;
+    }
+
+    public static void setNextId(int num){
+        Database.num = num;
     }
 }

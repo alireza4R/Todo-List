@@ -55,20 +55,23 @@ public class StepService {
         Scanner scn = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Enter the id of task you want to change");
+            System.out.println("Enter the id of Step you want to change");
             String id = scn.nextLine();
             int idNum = Integer.parseInt(id);
 
-            System.out.println("Enter the name of field that you want to change" + "\ntitle \ndescription\n status \n duedate \n");
+            System.out.println("Enter the name of field that you want to change" + "\ntitle \ndescription \nstatus \nduedate\n");
             String entry = scn.nextLine();
-            System.out.println("Enter new value");
+            System.out.println("Enter new value\n");
+            if(entry.equals("status")){
+                System.out.println("You can choose between:\nCompleted\nInProgress\nNotStarted ");
+            }
             String newValue = scn.nextLine();
             Step temp = null;
             String temp2 = null;
             try {
                 temp = (Step) Database.get(idNum);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.out.println(e.getMessage() + "what??");
                 return;
             }
 
@@ -87,6 +90,7 @@ public class StepService {
 
                 case "status":
                     try {
+                        System.out.println();
                         temp2 = temp.status.toString();
                         temp.status = Step.Status.valueOf(newValue);
                         Database.update(temp);
