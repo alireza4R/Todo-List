@@ -65,7 +65,7 @@ public class TaskService {
             String id = scn.nextLine();
             int idNum = Integer.parseInt(id);
 
-            System.out.println("Enter the name of field that you want to change" + "\ntitle \ndescription\n status \n duedate \n");
+            System.out.println("Enter the name of field that you want to change" + "\ntitle \ndescription\nstatus \nduedate\n");
             String entry =  scn.nextLine();
             System.out.println("Enter new value");
             String newValue = scn.nextLine();
@@ -75,7 +75,7 @@ public class TaskService {
                 temp = (Task) Database.get(idNum);
             }
             catch (Exception e){
-                System.out.println(e.getMessage());
+                System.out.println("Task with id=" + id + "doesn't exist.\n" + e.getMessage());
                 return;
             }
 
