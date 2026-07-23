@@ -1,6 +1,6 @@
 # In-Memory Database & CLI Task Manager
 
-A robust, object-oriented task management system built entirely in Java. This project combines an interactive Command-Line Interface (CLI) application with a custom-built, generic **In-Memory Database**. It is designed to strictly follow Solid principles, specifically demonstrating advanced memory management, custom validation, and data serialization.
+This project combines an interactive Command-Line Interface (CLI) application with a custom-built, generic **In-Memory Database**. It is designed to strictly follow Solid principles, specifically demonstrating advanced memory management, custom validation, and data serialization.
 
 ## 🚀 Key Features
 
